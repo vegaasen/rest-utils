@@ -39,11 +39,14 @@ I used GSON together with this thing, and it works just as I want it to work! Ot
 
 ## Simple GET with a URL-parameter
 
-    new Restinator("http://www.rest.com/my/rest/service/{my-param}").urlParam(new UrlParam("my-param", "123456789")).get();
+    new Restinator("http://www.rest.com/my/rest/service/{my-param}")
+        .urlParam(new UrlParam("my-param", "123456789"))
+        .get();
 
 ## Simple GET with a header
 
     new Restinator("http://www.rest.com/my/rest/service/{my-param}")
+        .urlParam(new UrlParam("my-param", "123456789"))
         .header(new Header("User-Agent", "my h4x0r c0mpu70r"))
         .get();
 
