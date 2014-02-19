@@ -27,12 +27,12 @@ public final class StringUtilsTest {
 
     @Test
     public void isBlank_validString_true() {
-        assertTrue(StringUtils.isBlank("Heya"));
+        assertFalse(StringUtils.isBlank("Heya"));
     }
 
     @Test
     public void isNull_nullString_false() {
-        assertFalse(StringUtils.isNull(null));
+        assertTrue(StringUtils.isNull(null));
     }
 
     @Test

@@ -3,6 +3,7 @@ package com.vegaasen.http.rest.utils;
 import com.vegaasen.http.rest.model.Scheme;
 import com.vegaasen.http.rest.model.abs.StringId;
 import com.vegaasen.http.rest.model.http.Param;
+import com.vegaasen.http.rest.model.http.UrlParam;
 
 import java.util.List;
 
@@ -11,8 +12,10 @@ import java.util.List;
  */
 public final class UrlBuilder<T> {
 
+    public static final String AMP = "&", FT = "?", EQ = "=", VALUE_SEPARATOR = ";";
+    public static final String R = "{", L = "}";
+
     private static final String EMPTY = "";
-    private static final String AMP = "&", FT = "?", EQ = "=", VALUE_SEPARATOR = ";";
     private static final int FIRST = 0;
     private static final UrlBuilder builder;
 
@@ -23,16 +26,33 @@ public final class UrlBuilder<T> {
     private UrlBuilder() {
     }
 
-    private static UrlBuilder getInstance() {
+    public static UrlBuilder getInstance() {
         return builder;
     }
 
     public static String buildFromScheme(final Scheme scheme) {
-        if (scheme == null) {
+        if (scheme == null || scheme.getTo() == null) {
             throw new IllegalArgumentException("Scheme cannot be nilled");
         }
+        return String.format(
+                "%s%s",
+                conditionallyReplaceUrlParams(scheme.getUrlParams(), scheme.getTo().toString()),
+                appendParams(scheme.getParams())
+        );
+    }
 
-        return String.format("%s%s", scheme.getTo().toString(), appendParams(scheme.getParams()));
+    private static String conditionallyReplaceUrlParams(final List<UrlParam> urlParams, final String url) {
+        if (urlParams == null || urlParams.isEmpty()) {
+            return url;
+        }
+        String remastered = url;
+        for (final UrlParam urlParam : urlParams) {
+            final String key = String.format("%s%s%s", R, urlParam.getKey().getId(), L);
+            if (remastered.contains(key)) {
+                remastered = remastered.replace(key, urlParam.getValue().getId());
+            }
+        }
+        return remastered;
     }
 
     @SuppressWarnings("unchecked")
@@ -63,7 +83,7 @@ public final class UrlBuilder<T> {
     }
 
     //todo: generify
-    private boolean lastIndexOf(final T o, final List<T> os) {
+    public boolean lastIndexOf(final T o, final List<T> os) {
         return os == null || o == null || os.indexOf(o) == (os.size() - 1);
     }
 

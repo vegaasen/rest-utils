@@ -2,6 +2,7 @@ package com.vegaasen.http.rest.utils;
 
 import com.vegaasen.http.rest.model.Scheme;
 import com.vegaasen.http.rest.model.http.Param;
+import com.vegaasen.http.rest.model.http.UrlParam;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -60,6 +61,24 @@ public final class UrlBuilderTest {
         assertNotNull(result);
         assertFalse(result.isEmpty());
         assertEquals(url, result);
+    }
+
+    @Test
+    public void buildFromScheme_buildWithUrlParameters_ok() {
+        final String replaceAbleUrl = "http://www.wtf.omg/{replace}/{me}/{too}/";
+        final String expectedUrl = "http://www.wtf.omg/withThisStuff/andWithMe/dontForgetMe/";
+        final Scheme scheme = new Scheme();
+        scheme.setTo(replaceAbleUrl);
+        scheme.addUrlParam(new UrlParam("too", "dontForgetMe"));
+        scheme.addUrlParam(new UrlParam("me", "andWithMe"));
+        scheme.addUrlParam(new UrlParam("replace", "withThisStuff"));
+
+        final String result = UrlBuilder.buildFromScheme(scheme);
+
+        assertNotNull(result);
+        assertFalse(result.isEmpty());
+        assertTrue(result.contains("withThisStuff"));
+        assertEquals(expectedUrl, result);
     }
 
 }

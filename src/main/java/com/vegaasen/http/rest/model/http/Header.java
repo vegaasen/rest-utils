@@ -7,7 +7,11 @@ import com.vegaasen.http.rest.model.abs.KeyValueVariant;
  */
 public final class Header extends KeyValueVariant {
 
-    public Header(final String key, final String... value) {
+    public static final String
+            HEADER_CONTENT_TYPE = "Content-Type",
+            HEADER_ACCEPTS = "Accepts";
+
+    public Header(final String key, final String value) {
         super(key, value);
     }
 

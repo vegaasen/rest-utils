@@ -2,32 +2,27 @@ package com.vegaasen.http.rest.model.abs;
 
 import com.vegaasen.http.rest.utils.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author <a href="vegaasen@gmail.com">vegardaasen</a>
  */
 public abstract class KeyValueVariant {
 
-    private StringId key;
-    private List<StringId> value = new ArrayList<>();
+    private final StringId key;
+    private final StringId value;
 
-    public KeyValueVariant(final String key, final String... value) {
-        if (StringUtils.isBlank(key) || value.length == 0) {
+    public KeyValueVariant(final String key, final String value) {
+        if (StringUtils.isBlank(key) || StringUtils.isBlank(value)) {
             throw new IllegalArgumentException("Neither key or value can be nilled/empty.");
         }
         this.key = new StringId(key);
-        for (final String v : value) {
-            this.value.add(new StringId(v));
-        }
+        this.value = new StringId(value);
     }
 
     public StringId getKey() {
         return key;
     }
 
-    public List<StringId> getValue() {
+    public StringId getValue() {
         return value;
     }
 }

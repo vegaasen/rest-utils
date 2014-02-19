@@ -1,20 +1,22 @@
 package com.vegaasen.http.rest.handler;
 
+import com.vegaasen.http.rest.model.http.Response;
+
 /**
  * @author <a href="vegaasen@gmail.com">vegardaasen</a>
  */
 public abstract interface HttpMethod {
 
-    String get();
+    Response get();
 
-    String post();
+    Response post();
 
-    String put();
+    Response put();
 
-    String options();
+    Response options();
 
-    String delete();
+    Response delete();
 
-    String head();
+    Response head();
 
 }
