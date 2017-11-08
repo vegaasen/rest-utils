@@ -16,7 +16,7 @@ public final class Restinator extends AbstractRestinator {
 
     private static int connectionTimeout = 20000, socketTimeout = connectionTimeout;
 
-    public Restinator(final String url) {
+public Restinator(final String url) {
         scheme.setTo(url);
     }
 

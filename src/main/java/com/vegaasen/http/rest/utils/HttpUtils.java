@@ -88,7 +88,7 @@ public final class HttpUtils {
             final RequestType requestType) {
         if (requestType.equals(RequestType.PUT) || requestType.equals(RequestType.POST) || requestType.equals(RequestType.DELETE)) {
             urlConnection.addRequestProperty(Header.HEADER_CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED.getVariant());
-            if (scheme.getParams() == null && scheme.getParams().isEmpty()) {
+            if (scheme.getParams() == null || scheme.getParams().isEmpty()) {
                 return;
             }
             final StringBuilder builder = new StringBuilder();
